@@ -22,3 +22,7 @@ CV library
 Google careers
 
 https://www.openwebninja.com/ jobs API 
+
+data sorting in Python 
+Using Json / Env variables
+output to Json
