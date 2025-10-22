@@ -1,28 +1,31 @@
-project outline notes
-Job scout search for jobs with specified criteria from multiple sites
-aggregate data for search
+# project outline notes
 
-Stretch goals
+- Job scout search for jobs with specified criteria from multiple sites
+- aggregate data for search
 
-Questions
-How many sites does google jobs aggregate?
-How quickly does google jobs pull data?
-is it better to go direct?
-what sites do we want to search?
-which sites have suitable APis?
-what method do we want to use to get data?
-is scraping the way forward?
+## Stretch goals
 
-Job sites
-LinkedIn
-Indeed
-Glassdoor
-Monster
-CV library
-Google careers
+## Questions
+- How many sites does google jobs aggregate?
+- How quickly does google jobs pull data?
+- is it better to go direct?
+- what sites do we want to search?
+- which sites have suitable APis?
+- what method do we want to use to get data?
+- is scraping the way forward?
 
-https://www.openwebninja.com/ jobs API 
+## Job sites
+- LinkedIn
+- Indeed
+- Glassdoor
+- Monster
+- CV library
+- Google careers
 
-data sorting in Python 
-Using Json / Env variables
-output to Json
+## Jobs API
+https://www.openwebninja.com/
+
+
+- data sorting in Python 
+- Using Json / Env variables
+- output to Json
