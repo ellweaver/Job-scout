@@ -1,4 +1,4 @@
-from json.json_example import ninja_response
+from json_files.json_example import ninja_response
 import pytest 
 import requests 
 from unittest.mock import Mock
