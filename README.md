@@ -2,7 +2,7 @@
 
 example blank .env file:
 ```env
-API_KEY=
+API_KEY={'x-api-key':}
 URL=
 QUERY=
 COUNTRY=
