@@ -5,8 +5,8 @@ from unittest.mock import Mock
 from src.extract import extract
 
 class TestExtract:
-    @pytest.mark.it('extract function returns string value')
-    def test_extract_string(self, mock_response):
+    @pytest.mark.it('extract function returns correct response')
+    def test_extract_response(self, mock_response):
         assert isinstance(extract().json(), dict)
         assert isinstance(extract().status_code, int)
 
