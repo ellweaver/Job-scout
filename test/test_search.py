@@ -26,3 +26,13 @@ class TestPerformSearch:
         
         perform_search(file, test_api)
         mock.assert_called_with(test_event)
+
+
+    @pytest.mark.it('perform search returns correct response')
+    def test_search_returns_correct_response(self,mock_response):
+        file= "./test/test_json.json"
+        test_api={"x-api-key":"TEST_API"}
+
+        response= perform_search(file,test_api)
+        assert isinstance(response.json(), dict)
+        assert isinstance(response.status_code, int)
