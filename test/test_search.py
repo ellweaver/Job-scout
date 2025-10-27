@@ -18,11 +18,11 @@ class TestPerformSearch:
             
         mock = MiniMockResponse()
 
-        monkeypatch.setattr("src.extract",  mock)
+        monkeypatch.setattr("src.search.extract",  mock)
         
         file= "./test/test_json.json"
         test_api={"x-api-key":"TEST_API"}
-        test_event='{"api_key": {"x-api-key":"TEST_API"}, "url":"https://api.openwebninja.com/jsearch/search","params":{"query":"junior python"}}'
+        test_event='{"api_key": {"x-api-key": "TEST_API"}, "url": "https://api.openwebninja.com/jsearch/search", "params": {"query": "junior python"}}'
         
         perform_search(file, test_api)
         mock.assert_called_with(test_event)
