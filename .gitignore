@@ -2,3 +2,4 @@
 venv
 **/.pycache
 **/__pycache__
+search_results/**
