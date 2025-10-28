@@ -7,16 +7,19 @@ from src.extract import extract
 class TestExtract:
     @pytest.mark.it('extract function returns correct response')
     def test_extract_response(self, mock_response):
-        assert isinstance(extract().json(), dict)
-        assert isinstance(extract().status_code, int)
+        
+        test_event={"api_key": {"x-api-key": "TEST_API"}, "url": "https://api.openwebninja.com/jsearch/search", "params": {"query": "junior python"}}
+
+        assert isinstance(extract(test_event).json(), dict)
+        assert isinstance(extract(test_event).status_code, int)
 
     @pytest.mark.it('extract function is called with the correct arguments')
     def test_extract_arguments(self, monkeypatch):
-        event = """{
+        event = {
             "url":"https://api.openwebninja.com/jsearch/search",
             "api_key": {"x-api-key":"TEST KEY"},
             "params":{"query":"junior python"}
-            }"""
+            }
         
         class MiniMockResponse(Mock):
             @staticmethod
