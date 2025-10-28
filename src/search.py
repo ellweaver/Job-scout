@@ -25,7 +25,7 @@ def perform_search(search_filepath="./json_files/default_event.json", api_key=os
     
 def generate_search(
         url="https://api.openwebninja.com/jsearch/search",
-        query="", page=1, num_pages=1, country="gb", ):
+        query="", page=1, num_pages=1, country="gb", language="en"):
     '''
     Console tool to create a json file which can be used for perform_search
     '''
