@@ -6,12 +6,14 @@ import json
 
 load_dotenv()
 
-def extract(event=os.getenv("DEFAULT_EVENT")):
-    event = json.loads(event) 
+def extract(event):
+
     params = event["params"]
-    headers = json.loads(event["api_key"])
+    headers = event["api_key"]
     url = event["url"]
+
     response = requests.get(url, headers=headers, params=params)
+    
     return response
 
 if __name__ =="__main__":
