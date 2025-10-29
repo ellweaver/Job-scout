@@ -19,6 +19,7 @@ def perform_search(
     search_filepath="./search_queries/default_event.json",
     api_key=os.getenv("API_KEY"),
     destination_filepath="./search_results/default_destination.json",
+
 ):
     """
     Turns Json File into event string and inputs string into extract function.
@@ -32,7 +33,7 @@ def perform_search(
     response = extract(event)
 
     with open(destination_filepath, "w") as f:
-        f.write(str(response.json()))
+        f.write(json.dumps(response.json()))
 
     return response
 
@@ -40,7 +41,8 @@ def perform_search(
 def generate_search_file(
     url="https://api.openwebninja.com/jsearch/search",
     query="",
-    search_filepath="",
+    file_name="",
+    search_directory="search_queries/",
     page=1,
     num_pages=1,
     country="gb",
@@ -65,12 +67,16 @@ def generate_search_file(
         query=input("Enter your search Query: ")
     event["params"]["query"] =query
     
-    while not search_filepath:
-        search_filepath="search_queries/"
-        search_filepath=search_filepath+input("Please enter your Search file name without extension: ").lstrip()+".json"
+
+    while not file_name:
+        file_name=input("Please enter your Search file name without extension: ").lstrip()
+    
+    file_name= file_name+".json"
+        
+    search_filepath=search_directory+file_name
     
     
     with open(search_filepath, "w")as f:
-        f.write(str(event))
+        f.write(json.dumps(event))
 
     return {"event":event, "filepath":search_filepath}
