@@ -47,5 +47,23 @@ class TestPerformSearch:
 
 class TestGenerateSearchFile:
     @pytest.mark.it('Generate_search_file returns dictionary')
-    def test_generate_search_file_dict(self):
+    def test_generate_search_file_dict(self,monkeypatch):
+        monkeypatch.setattr('builtins.input', lambda _:"test query in london")
         assert isinstance(generate_search_file(),dict)
+    @pytest.mark.it('Generate_search_file returns correct result')
+    
+    def test_Generate_search_file_result(self, monkeypatch):
+        user_query="test query in london"
+        user_filename="test_file"
+        user_entry=iter([user_query,user_filename])
+        monkeypatch.setattr('builtins.input', lambda _:next(user_entry))
+        test_event={
+        "api_key": {},
+        "url": "https://api.openwebninja.com/jsearch/search",
+        "params": {"query": "test query in london", "search_filepath": "/json_files/user_event.json", "page":1, "num_pages":1, "country":"gb","language":"en","date_posted":"all","work_from_home":False,"employment_types":["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"],"radius":25}
+    }
+        assert generate_search_file()["event"] == test_event
+
+    @pytest.mark.it('Generate_search_file returns correct filepath')
+    def test_generate_search_file_filepath(self):
+        pass

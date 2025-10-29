@@ -40,7 +40,7 @@ def perform_search(
 def generate_search_file(
     url="https://api.openwebninja.com/jsearch/search",
     query="",
-    search_filepath="/json_files/user_event.json",
+    search_filepath="",
     page=1,
     num_pages=1,
     country="gb",
@@ -58,8 +58,19 @@ def generate_search_file(
     """
     event = {
         "api_key": {},
-        "url": "https://api.openwebninja.com/jsearch/search",
-        "params": {"query": "junior python"},
+        "url": url,
+        "params": {"query": "", "search_filepath": search_filepath, "page":page, "num_pages":num_pages, "country":country,"language":language,"date_posted":date_posted,"work_from_home":work_from_home,"employment_types":employment_types,"radius":radius}
     }
+    while not query:
+        query=input("Enter your search Query: ")
+    event["params"]["query"] =query
+    
+    while not search_filepath:
+        search_filepath="json_files/"
+        search_filepath=search_filepath+input("Please enter your Search file name without extension: ").lstrip()+".json"
+    
+    
+    with open(search_filepath, "w")as f:
+        f.write(str(event))
 
-    return {}
+    return {"event":event, "filepath":search_filepath}
