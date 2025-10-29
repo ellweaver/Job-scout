@@ -59,14 +59,14 @@ def generate_search_file(
     event = {
         "api_key": {},
         "url": url,
-        "params": {"query": "", "search_filepath": search_filepath, "page":page, "num_pages":num_pages, "country":country,"language":language,"date_posted":date_posted,"work_from_home":work_from_home,"employment_types":employment_types,"radius":radius}
+        "params": {"query": "", "page":page, "num_pages":num_pages, "country":country,"language":language,"date_posted":date_posted,"work_from_home":work_from_home,"employment_types":employment_types,"radius":radius}
     }
     while not query:
         query=input("Enter your search Query: ")
     event["params"]["query"] =query
     
     while not search_filepath:
-        search_filepath="json_files/"
+        search_filepath="search_queries/"
         search_filepath=search_filepath+input("Please enter your Search file name without extension: ").lstrip()+".json"
     
     

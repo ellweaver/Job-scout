@@ -60,7 +60,7 @@ class TestGenerateSearchFile:
         test_event={
         "api_key": {},
         "url": "https://api.openwebninja.com/jsearch/search",
-        "params": {"query": "test query in london", "search_filepath": "/json_files/user_event.json", "page":1, "num_pages":1, "country":"gb","language":"en","date_posted":"all","work_from_home":False,"employment_types":["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"],"radius":25}
+        "params": {"query": "test query in london", "page":1, "num_pages":1, "country":"gb","language":"en","date_posted":"all","work_from_home":False,"employment_types":["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"],"radius":25}
     }
         assert generate_search_file()["event"] == test_event
 
