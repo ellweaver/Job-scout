@@ -1,4 +1,4 @@
-from src.search import query, perform_search, generate_search
+from src.search import query, perform_search, generate_search_file
 import pytest
 from json_files.json_example import ninja_response
 from src.extract import extract
@@ -23,6 +23,7 @@ class TestPerformSearch:
 
         file = "./test/test_json.json"
         test_api = "TEST_API"
+        test_file="./test/test_destination.json"
 
         test_event = {
             "api_key": {"x-api-key": "TEST_API"},
@@ -30,14 +31,21 @@ class TestPerformSearch:
             "params": {"query": "junior python"},
         }
 
-        perform_search(file, test_api)
+        perform_search(file, test_api, test_file)
         mock.assert_called_with(test_event)
 
     @pytest.mark.it("perform search returns correct response")
     def test_search_returns_correct_response(self, mock_response):
         file = "./test/test_json.json"
         test_api = {"x-api-key": "TEST_API"}
+        test_file="./test/test_destination.json"
 
-        response = perform_search(file, test_api)
+        response = perform_search(file, test_api, test_file)
         assert isinstance(response.json(), dict)
         assert isinstance(response.status_code, int)
+
+
+class TestGenerateSearchFile:
+    @pytest.mark.it('Generate_search_file returns dictionary')
+    def test_generate_search_file_dict(self):
+        assert isinstance(generate_search_file(),dict)

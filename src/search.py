@@ -37,9 +37,10 @@ def perform_search(
     return response
 
 
-def generate_search(
+def generate_search_file(
     url="https://api.openwebninja.com/jsearch/search",
     query="",
+    search_filepath="/json_files/user_event.json",
     page=1,
     num_pages=1,
     country="gb",
@@ -53,7 +54,7 @@ def generate_search(
     fields=None,
 ):
     """
-    Console tool to create a json file which can be used for perform_search
+    Console tool to create a json file which can be used for perform_search also returns event dict
     """
     event = {
         "api_key": {},
@@ -61,4 +62,4 @@ def generate_search(
         "params": {"query": "junior python"},
     }
 
-    input()
+    return {}
