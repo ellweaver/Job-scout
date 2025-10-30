@@ -1,4 +1,4 @@
-ninja_response= {
+ninja_response = {
     'data': [{'apply_options': [{'apply_link': 'https://www.ziprecruiter.com/c/KBR/Job/Junior-Python-Coder-and-Analyst-with-Security-Clearance/-in-Arlington,VA?jid=7f1831b30d849947&utm_campaign=google_jobs_apply&utm_source=google_jobs_apply&utm_medium=organic',
                               'is_direct': False,
                               'publisher': 'ZipRecruiter'},
