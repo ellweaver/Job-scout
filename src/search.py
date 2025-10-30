@@ -76,7 +76,7 @@ def generate_search_file(
     search_filepath=search_directory+file_name
     
     
-    with open(search_filepath, "w")as f:
+    with open(search_filepath, "w") as f:
         f.write(json.dumps(event))
 
     return {"event":event, "filepath":search_filepath}
