@@ -2,4 +2,4 @@
 *
 # Except this file
 !.gitignore
-!default_event.json
+!default_search.json
