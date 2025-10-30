@@ -1,1 +1,0 @@
-{"api_key": {}, "url": "https://api.openwebninja.com/jsearch/search", "params": {"query": "test query in london", "page": 1, "num_pages": 1, "country": "gb", "language": "en", "date_posted": "all", "work_from_home": false, "employment_types": ["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"], "radius": 25}}
