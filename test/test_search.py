@@ -1,9 +1,9 @@
 from src.search import query, perform_search, generate_search_file
-import pytest
 from test_json.json_example import ninja_response
 from src.extract import extract
 from unittest.mock import Mock
-
+import json
+import pytest
 
 class TestPerformSearch:
     @pytest.mark.it("extract called with correct event")
@@ -49,6 +49,27 @@ class TestPerformSearch:
 
         assert isinstance(response.json(), dict)
         assert isinstance(response.status_code, int)
+
+    @pytest.mark.it("Test that extract response saves in expected location")
+    def test_search_saves_response(self, mock_response, monkeypatch):
+        user_filename = "test_search_query"
+        user_query = "test query in Jamaica"
+        test_api_token = "TEST_API"
+        destination_filepath = "./test/test_json/test_results.json"
+        
+        monkeypatch.setattr('builtins.input', lambda _:user_filename)
+        
+        search_filepath = generate_search_file(query=user_query, search_directory="./test/test_json/")['filepath']
+
+        perform_search(
+            search_filepath=search_filepath,
+            api_key=test_api_token,
+            destination_filepath=destination_filepath)
+
+        with open(destination_filepath, "r") as f:
+            results_file = f.read()
+        
+        assert json.loads(results_file) == ninja_response
 
 
 class TestGenerateSearchFile:
