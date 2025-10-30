@@ -1,6 +1,5 @@
-from src.search import query, perform_search, generate_search_file
+from src.search import perform_search, generate_search_file
 from test_json.json_example import ninja_response
-from src.extract import extract
 from unittest.mock import Mock
 import json
 import pytest
