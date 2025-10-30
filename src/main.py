@@ -9,4 +9,15 @@ def main():
     or
     generate search
     """
-    pass
+    
+    """ OUTLINE
+    
+    perform search or create search file
+    
+    if perform search:
+        manual event file entry
+        or
+        list from search_queries
+
+    
+    """
