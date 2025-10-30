@@ -1,7 +1,0 @@
-{
-  "url": "https://api.openwebninja.com/jsearch/search",
-  "params": {
-    "query": "data engineer in London",
-    "country": "gb"
-  }
-}
