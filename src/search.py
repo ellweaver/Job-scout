@@ -61,11 +61,13 @@ def generate_search_file(
     while not file_name:
         file_name = input("Please enter your Search file name without extension: ").lstrip()
     
-    file_name = file_name+".json"
+    file_name = file_name + ".json"
         
-    search_filepath=search_directory+file_name
+    search_filepath = search_directory + file_name
     
-    
+    ### if advaced search...
+    ###     input(params extended) for loop
+
     with open(search_filepath, "w") as f:
         f.write(json.dumps(event))
 
