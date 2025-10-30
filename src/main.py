@@ -12,12 +12,26 @@ def main():
     
     """ OUTLINE
     
-    perform search or create search file
-    
-    if perform search:
-        manual event file entry
-        or
-        list from search_queries
+    A - perform default search (default api token and default params)
+        invokes perform_search()
+            *** date/time to filepath
+    or
+    B - generate simple search
+        invokes generate_search(adv=false)
+    or
+    C - generate advanced (option at end to save as default?)?
+        invokes generate_search(adv=true)
+    or
+    D - perform search
+        manual file entry for search file
+            use default api token (.env)
+            or
+            enter new api token
+    or
+    E - list history
+        select from history of search_queries
+            use default api token (.env)
+            or
+            enter new api token
 
-    
     """
