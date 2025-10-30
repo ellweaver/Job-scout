@@ -63,6 +63,7 @@ def generate_search_file(
         "url": url,
         "params": {"query": "", "page":page, "num_pages":num_pages, "country":country,"language":language,"date_posted":date_posted,"work_from_home":work_from_home,"employment_types":employment_types,"radius":radius}
     }
+    
     while not query:
         query=input("Enter your search Query: ")
     event["params"]["query"] =query
