@@ -5,18 +5,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
-def query():
-    """
-    queries whether we want to immediately perform a search, calling a file or using existing defaults
-    or
-    generate search
-    """
-    pass
-
-
 def perform_search(
-    search_filepath="./search_queries/default_event.json",
+    search_filepath="./search_queries/default_search.json",
     api_key=os.getenv("API_KEY"),
     destination_filepath="./search_results/default_destination.json",
 
@@ -65,14 +55,13 @@ def generate_search_file(
     }
     
     while not query:
-        query=input("Enter your search Query: ")
-    event["params"]["query"] =query
-    
+        query = input("Enter your search Query: ")
+    event["params"]["query"] = query
 
     while not file_name:
-        file_name=input("Please enter your Search file name without extension: ").lstrip()
+        file_name = input("Please enter your Search file name without extension: ").lstrip()
     
-    file_name= file_name+".json"
+    file_name = file_name+".json"
         
     search_filepath=search_directory+file_name
     
