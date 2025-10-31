@@ -1,5 +1,5 @@
 from src.search import generate_search_file, perform_search
-
+import sys
 
 
 
@@ -35,3 +35,35 @@ def main():
             enter new api token
 
     """
+    while True:
+        title_line ="\n       JOBSCOUT\n"
+        selection_message= """
+        S - generate search file (simple options)\n
+        A - generate search file (advanced options)\n
+            D - Default search (default api token and default params)\n
+            L - Perform search (from file list)\n
+            M - Manual file search\n
+                    X - Quit\n\n"""
+        user_message="Please enter selection:"
+        user_input=input(title_line+selection_message+user_message )
+        match user_input.upper().strip():
+            case "S":
+                generate_search_file()
+            case "A":
+                generate_search_file()
+            case "D":
+                perform_search()
+            case "L":
+                perform_search()
+            case "M":
+                perform_search()
+            case "X":
+                sys.exit()
+            case _:
+                print("\n\n\n Please Enter A Valid Selection (case insensitive)\n\n")
+        
+
+
+
+if __name__ =="__main__":
+    main()
