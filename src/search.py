@@ -16,7 +16,7 @@ def query():
 
 
 def perform_search(
-    search_filepath="./search_queries/default_event.json",
+    search_filepath="./search_queries/default_search.json",
     api_key=os.getenv("API_KEY"),
     destination_filepath="./search_results/default_destination.json",
 
