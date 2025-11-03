@@ -2,6 +2,7 @@ from src.extract import extract
 import json
 import os
 from dotenv import load_dotenv
+from datetime import datetime
 
 load_dotenv()
 
@@ -16,22 +17,24 @@ def query():
 
 
 def perform_search(
-    search_filepath="./search_queries/default_search.json",
+    search_directory="./search_queries/",
+    search_filename="default_search.json",
     api_key=os.getenv("API_KEY"),
-    destination_filepath="./search_results/default_destination.json",
+    destination_directory="./search_results/",
+    
 
 ):
     """
     Turns Json File into event string and inputs string into extract function.
     """
-
+    search_filepath=search_directory+search_filename
     with open(search_filepath) as f:
         event = json.load(f)
 
     event["api_key"] = {"x-api-key": api_key}
 
     response = extract(event)
-
+    destination_filepath=destination_directory+search_filename
     with open(destination_filepath, "w") as f:
         f.write(json.dumps(response.json(), indent=4))
 
@@ -79,4 +82,4 @@ def generate_search_file(
     with open(search_filepath, "w")as f:
         f.write(json.dumps(event, indent=4))
 
-    return {"event":event, "filepath":search_filepath}
+    return {"event":event, "search_directory":search_directory,"filename":file_name,"filepath":search_filepath}

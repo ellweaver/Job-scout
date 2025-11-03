@@ -21,30 +21,33 @@ class TestPerformSearch:
         monkeypatch.setattr("src.search.extract", mock)
 
         test_api_token = "TEST_API"
-        test_search_results_file="./test/test_json/test_results.json"
+        test_search_results_directory="./test/test_json/"
 
         user_query = "test query in london"
         file_name = "test_search_query"
 
         test_event = {"api_key": {"x-api-key": "TEST_API"}, "url": "https://api.openwebninja.com/jsearch/search", "params": {"query": "test query in london", "page": 1, "num_pages": 1, "country": "gb", "language": "en", "date_posted": "all", "work_from_home": False, "employment_types": ["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"], "radius": 25}}
         
-        filepath = generate_search_file(query=user_query, file_name=file_name, search_directory="./test/test_json/")['filepath']
-        
-        perform_search(filepath, test_api_token, test_search_results_file)
+        filepath = generate_search_file(query=user_query, file_name=file_name, search_directory="./test/test_json/")
+        search_directory= filepath["search_directory"]
+        search_filename=filepath["filename"]
+        perform_search(search_directory,search_filename, test_api_token, test_search_results_directory)
 
         mock.assert_called_with(test_event)
 
     @pytest.mark.it("perform search returns correct response")
     def test_search_returns_correct_response(self, mock_response):
         test_api_token = "TEST_API"
-        test_search_results_file="./test/test_json/test_results.json"
+        test_search_results_directory="./test/test_json/"
 
         user_query = "test query in london"
         file_name = "test_search_query"
 
-        filepath = generate_search_file(query=user_query, file_name=file_name, search_directory="./test/test_json/")['filepath']
-        
-        response = perform_search(filepath, test_api_token, test_search_results_file)
+        filepath = generate_search_file(query=user_query, file_name=file_name, search_directory="./test/test_json/")
+        search_directory= filepath["search_directory"]
+        search_filename=filepath["filename"]
+
+        response = perform_search(search_directory, search_filename, test_api_token, test_search_results_directory)
 
         assert isinstance(response.json(), dict)
         assert isinstance(response.status_code, int)
@@ -54,17 +57,21 @@ class TestPerformSearch:
         user_filename = "test_search_query"
         user_query = "test query in Jamaica"
         test_api_token = "TEST_API"
-        destination_filepath = "./test/test_json/test_results.json"
+        destination_directory = "./test/test_json/"
         
         monkeypatch.setattr('builtins.input', lambda _:user_filename)
         
-        search_filepath = generate_search_file(query=user_query, search_directory="./test/test_json/")['filepath']
+        search_filepath = generate_search_file(query=user_query, search_directory="./test/test_json/")
+        search_directory= search_filepath["search_directory"]
+        search_filename=search_filepath["filename"]
 
         perform_search(
-            search_filepath=search_filepath,
+            search_directory=search_directory,
+            search_filename=search_filename,
             api_key=test_api_token,
-            destination_filepath=destination_filepath)
+            destination_directory=destination_directory)
 
+        destination_filepath=destination_directory+user_filename+".json"
         with open(destination_filepath, "r") as f:
             results_file = f.read()
         
@@ -99,7 +106,7 @@ class TestGenerateSearchFile:
     def test_file_save(self, monkeypatch):
         user_filename = "test_search_query"
         user_query = "test query in Jamaica"
-        
+        test_result= json.loads()
         monkeypatch.setattr('builtins.input', lambda _:user_filename)
         
         filepath = generate_search_file(query=user_query, search_directory="./test/test_json/")['filepath']
