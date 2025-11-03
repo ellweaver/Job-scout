@@ -106,12 +106,31 @@ class TestGenerateSearchFile:
     def test_file_save(self, monkeypatch):
         user_filename = "test_search_query"
         user_query = "test query in Jamaica"
-        test_result= json.loads()
         monkeypatch.setattr('builtins.input', lambda _:user_filename)
+        test_file="""{
+    "api_key": {},
+    "url": "https://api.openwebninja.com/jsearch/search",
+    "params": {
+        "query": "test query in Jamaica",
+        "page": 1,
+        "num_pages": 1,
+        "country": "gb",
+        "language": "en",
+        "date_posted": "all",
+        "work_from_home": false,
+        "employment_types": [
+            "FULLTIME",
+            "CONTRACTOR",
+            "PARTTIME",
+            "INTERN"
+        ],
+        "radius": 25
+    }
+}"""
         
         filepath = generate_search_file(query=user_query, search_directory="./test/test_json/")['filepath']
 
         with open(filepath, "r") as f:
             search_file = f.read()
 
-        assert search_file == '{"api_key": {}, "url": "https://api.openwebninja.com/jsearch/search", "params": {"query": "test query in Jamaica", "page": 1, "num_pages": 1, "country": "gb", "language": "en", "date_posted": "all", "work_from_home": false, "employment_types": ["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"], "radius": 25}}'
+        assert search_file == test_file
