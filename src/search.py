@@ -7,13 +7,6 @@ from datetime import datetime
 load_dotenv()
 
 
-def query():
-    """
-    queries whether we want to immediately perform a search, calling a file or using existing defaults
-    or
-    generate search
-    """
-    pass
 
 
 def perform_search(
