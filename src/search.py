@@ -34,7 +34,8 @@ def perform_search(
     event["api_key"] = {"x-api-key": api_key}
 
     response = extract(event)
-    destination_filepath=destination_directory+search_filename
+    destination_timestamp=str(datetime.now())
+    destination_filepath=destination_directory+destination_timestamp+" "+search_filename
     with open(destination_filepath, "w") as f:
         f.write(json.dumps(response.json(), indent=4))
 

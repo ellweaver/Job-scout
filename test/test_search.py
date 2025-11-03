@@ -4,8 +4,11 @@ from unittest.mock import Mock
 import json
 import pytest
 from freezegun import freeze_time
+from datetime import datetime
 
 class TestPerformSearch:
+    
+    @freeze_time("2025-01-31")
     @pytest.mark.it("extract called with correct event")
     def test_search_calls_extract_correctly(self, mock_response, monkeypatch):
         class MiniMockResponse(Mock):
@@ -35,7 +38,8 @@ class TestPerformSearch:
         perform_search(search_directory,search_filename, test_api_token, test_search_results_directory)
 
         mock.assert_called_with(test_event)
-
+    
+    @freeze_time("2025-01-31")
     @pytest.mark.it("perform search returns correct response")
     def test_search_returns_correct_response(self, mock_response):
         test_api_token = "TEST_API"
@@ -53,13 +57,14 @@ class TestPerformSearch:
         assert isinstance(response.json(), dict)
         assert isinstance(response.status_code, int)
 
+    @freeze_time("2025-01-31")
     @pytest.mark.it("Test that extract response saves in expected location")
     def test_search_saves_response(self, mock_response, monkeypatch):
         user_filename = "test_search_query"
         user_query = "test query in Jamaica"
         test_api_token = "TEST_API"
         destination_directory = "./test/test_json/"
-        
+        destination_timestamp=str(datetime.now())
         monkeypatch.setattr('builtins.input', lambda _:user_filename)
         
         search_filepath = generate_search_file(query=user_query, search_directory="./test/test_json/")
@@ -72,7 +77,7 @@ class TestPerformSearch:
             api_key=test_api_token,
             destination_directory=destination_directory)
 
-        destination_filepath=destination_directory+user_filename+".json"
+        destination_filepath=destination_directory+destination_timestamp+" "+user_filename+".json"
         with open(destination_filepath, "r") as f:
             results_file = f.read()
         
