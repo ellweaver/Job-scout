@@ -33,7 +33,7 @@ def perform_search(
     response = extract(event)
 
     with open(destination_filepath, "w") as f:
-        f.write(json.dumps(response.json()))
+        f.write(json.dumps(response.json(), indent=4))
 
     return response
 
