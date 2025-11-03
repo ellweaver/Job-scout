@@ -3,6 +3,7 @@ from test_json.json_example import ninja_response
 from unittest.mock import Mock
 import json
 import pytest
+from freezegun import freeze_time
 
 class TestPerformSearch:
     @pytest.mark.it("extract called with correct event")
