@@ -13,27 +13,52 @@ def perform_search(
     search_directory="./search_queries/",
     search_filename="default_search.json",
     api_key=os.getenv("API_KEY"),
-    destination_directory="./search_results/",
-    
-
+    destination_directory="./search_results/"
 ):
     """
     Turns Json File into event string and inputs string into extract function.
     """
-    search_filepath=search_directory+search_filename
+    search_filepath = search_directory + search_filename
+    
     with open(search_filepath) as f:
         event = json.load(f)
 
     event["api_key"] = {"x-api-key": api_key}
 
     response = extract(event)
-    destination_timestamp=str(datetime.now())
-    destination_filepath=destination_directory+destination_timestamp+" "+search_filename
+    destination_timestamp = str(datetime.now())
+    destination_filepath = destination_directory + destination_timestamp + " " + search_filename
+    
     with open(destination_filepath, "w") as f:
         f.write(json.dumps(response.json(), indent=4))
 
     return response
 
+def manual_search():
+    """_summary_
+
+    queries user for 4 inputs:
+    - source directory
+    - source filename
+    - destination directory
+    - api token
+    """
+
+    search_directory = str(input("Please enter the directory for your search file [./search_queries/]: ")).strip()
+    search_filename = str(input("Please enter the filename of your search file [default_search.json]: ")).strip()
+    destination_directory = str(input("Please enter an existing save location for your query [./search_results/]: ")).strip()
+    api_token = str(input("Please enter your OpenWeb Ninja API token [.env]: ")).strip()
+
+    params = {
+        "search_directory": search_directory,
+        "search_filename": search_filename,
+        "destination_directory": destination_directory,
+        "api_token": api_token
+    }
+
+    not_none_params = {k:v for k, v in params.items() if v}
+
+    return perform_search(**not_none_params)
 
 def generate_search_file(
     url="https://api.openwebninja.com/jsearch/search",
