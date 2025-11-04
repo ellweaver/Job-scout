@@ -72,31 +72,51 @@ def generate_search_file(
     date_posted="all",
     work_from_home=False,
     employment_types=["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"],
-    job_requirements=None,
+    job_requirements="",
     radius=25,
-    exclude_job_publishers=None,
-    fields=None,
+    exclude_job_publishers="",
+    fields="",
+    advanced=False
 ):
     """
     Console tool to create a json file which can be used for perform_search also returns event dict
     """
+    
+    while not query:
+        query = input("Enter your search Query: ")
+    
+    if advanced == True:
+        pass
+
+    params = {
+        "query": query,
+        "page": page,
+        "num_pages": num_pages,
+        "country": country,
+        "language": language,
+        "date_posted": date_posted,
+        "work_from_home": work_from_home,
+        "employment_types": employment_types,
+        "job_requirements": job_requirements,
+        "radius": radius,
+        "exclude_job_publishers": exclude_job_publishers,
+        "fields": fields
+        }
+
+    not_none_params = {k:v for k, v in params.items() if v is not ""}
+
     event = {
         "api_key": {},
         "url": url,
-        "params": {"query": "", "page":page, "num_pages":num_pages, "country":country,"language":language,"date_posted":date_posted,"work_from_home":work_from_home,"employment_types":employment_types,"radius":radius}
+        "params": not_none_params
     }
-    while not query:
-        query=input("Enter your search Query: ")
-    event["params"]["query"] =query
-    
 
     while not file_name:
         file_name=input("Please enter your Search file name without extension: ").lstrip()
     
-    file_name= file_name+".json"
+    file_name = file_name + ".json"
         
-    search_filepath=search_directory+file_name
-    
+    search_filepath = search_directory + file_name
     
     with open(search_filepath, "w")as f:
         f.write(json.dumps(event, indent=4))
