@@ -86,7 +86,17 @@ def generate_search_file(
         query = input("Enter your search Query: ")
     
     if advanced == True:
-        pass
+        page = input("page [1]")
+        num_pages = input("number of pages [1]")
+        country = input("country [gb]")
+        language = input("language [en]")
+        date_posted = input("date posted [all]")
+        work_from_home = input("work from home [false]")
+        employment_types=list(input('employment types [["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"]]'))
+        job_requirements = input("job requirements []")
+        radius = input("radius [25]")
+        exclude_job_publishers = input("exclude job publishers []")
+        fields = input("fields []")
 
     params = {
         "query": query,
@@ -103,7 +113,7 @@ def generate_search_file(
         "fields": fields
         }
 
-    not_none_params = {k:v for k, v in params.items() if v is not ""}
+    not_none_params = {k:v for k, v in params.items() if v is not "" and v is not []}
 
     event = {
         "api_key": {},
@@ -112,13 +122,13 @@ def generate_search_file(
     }
 
     while not file_name:
-        file_name=input("Please enter your Search file name without extension: ").lstrip()
+        file_name = input("Please enter your Search file name without extension: ").lstrip()
     
     file_name = file_name + ".json"
         
     search_filepath = search_directory + file_name
     
-    with open(search_filepath, "w")as f:
+    with open(search_filepath, "w") as f:
         f.write(json.dumps(event, indent=4))
 
-    return {"event":event, "search_directory":search_directory,"filename":file_name,"filepath":search_filepath}
+    return {"event":event, "search_directory": search_directory, "filename": file_name, "filepath": search_filepath}
