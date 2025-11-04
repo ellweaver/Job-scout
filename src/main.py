@@ -50,7 +50,7 @@ def main():
             case "S":
                 generate_search_file()
             case "A":
-                generate_search_file()
+                generate_search_file(advanced=True)
             case "D":
                 perform_search()
             case "L":
