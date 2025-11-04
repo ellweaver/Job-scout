@@ -1,4 +1,4 @@
-from src.search import generate_search_file, perform_search
+from src.search import generate_search_file, perform_search, manual_search
 import sys
 
 
@@ -56,7 +56,7 @@ def main():
             case "L":
                 perform_search()
             case "M":
-                perform_search()
+                manual_search()
             case "X":
                 sys.exit()
             case _:
