@@ -170,3 +170,8 @@ def generate_search_file(
         f.write(json.dumps(event, indent=4))
 
     return {"event": event, "search_directory": search_directory, "filename": file_name, "filepath": search_filepath}
+
+def list_search_directory(search_directory="search_queries/"):
+    """lists all files in specified directory returns file path chosen by user input check file has url and params keys and query key in params """
+
+

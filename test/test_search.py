@@ -215,3 +215,11 @@ class TestManualSearch:
 
         manual_search()
         mock.assert_called_with()
+
+class TestListSearchDirectory:
+    @pytest.mark.it('returns correct filepath with correct user input')
+    def test_list_returns_correct_file_path(self):
+        pass
+    @pytest.mark.it('rejects file if not valid search Json')
+    def test_list_validates_non_search_files(self):
+        pass
