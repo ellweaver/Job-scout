@@ -140,7 +140,7 @@ class TestGenerateSearchFile:
     def test_generate_advanced (self, monkeypatch):
         inputs= iter(["test query in Japan", "2", "2", "us", "de", "all", "True","FULLTIME,CONTRACTOR,INTERN", "no_degree", "15", "beeBe,Dice", "employer_name,job_publisher,job_title,job_country" ])
         monkeypatch.setattr('builtins.input', lambda _:next(inputs))
-        response = generate_search_file(advanced=True, file_name="test_query_in_london")
+        response = generate_search_file(advanced=True, file_name="test_search_query",search_directory="./test/test_json/")
         assert response["event"]["params"]=={
         "query": "test query in Japan",
         "page": "2",
@@ -158,11 +158,11 @@ class TestGenerateSearchFile:
 
     @pytest.mark.it('Generate search file does not enter advanced params when input is empty')
     def test_generate_advanced_empty_params (self, monkeypatch):
-        inputs= iter(["test query in Japan", "", "", "", "", "", "","", "", "", "", "" ])
+        inputs= iter(["test_search_query", "", "", "", "", "", "","", "", "", "", "", "" ])
         monkeypatch.setattr('builtins.input', lambda _:next(inputs))
-        response = generate_search_file(advanced=True, file_name="test_query_in_london")
+        response = generate_search_file(advanced=True, search_directory="./test/test_json/")
         assert response["event"]["params"]=={
-        "query": "test query in Japan",
+        "query": "test_search_query",
         "page": "1",
         "num_pages": "1",
         "country": "gb",
@@ -172,3 +172,4 @@ class TestGenerateSearchFile:
         "employment_types": "FULLTIME,CONTRACTOR,PARTTIME,INTERN",
         "radius": "25",
         }
+        assert response["filename"] == "test_search_query.json"

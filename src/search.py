@@ -153,9 +153,14 @@ def generate_search_file(
         "url": url,
         "params": not_none_params
     }
-
+    
     while not file_name:
-        file_name = input("Please enter your Search file name without extension: ").lstrip()
+        user_response = input(f"Please enter your Search file name without extension[{query}]: ").lstrip()
+        if  user_response:
+            file_name = user_response
+        else:
+            file_name = query
+
     
     file_name = file_name + ".json"
         

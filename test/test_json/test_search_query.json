@@ -2,7 +2,7 @@
     "api_key": {},
     "url": "https://api.openwebninja.com/jsearch/search",
     "params": {
-        "query": "test query in Jamaica",
+        "query": "test_search_query",
         "page": "1",
         "num_pages": "1",
         "country": "gb",
