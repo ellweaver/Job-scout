@@ -65,15 +65,15 @@ def generate_search_file(
     query="",
     file_name="",
     search_directory="search_queries/",
-    page=1,
-    num_pages=1,
+    page="1",
+    num_pages="1",
     country="gb",
     language="en",
     date_posted="all",
     work_from_home=False,
-    employment_types=["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"],
+    employment_types="FULLTIME,CONTRACTOR,PARTTIME,INTERN",
     job_requirements="",
-    radius=25,
+    radius="25",
     exclude_job_publishers="",
     fields="",
     advanced=False
@@ -86,17 +86,50 @@ def generate_search_file(
         query = input("Enter your search Query: ")
     
     if advanced == True:
-        page = input("page [1]")
-        num_pages = input("number of pages [1]")
-        country = input("country [gb]")
-        language = input("language [en]")
-        date_posted = input("date posted [all]")
-        work_from_home = input("work from home [false]")
-        employment_types=list(input('employment types [["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"]]'))
-        job_requirements = input("job requirements []")
-        radius = input("radius [25]")
-        exclude_job_publishers = input("exclude job publishers []")
-        fields = input("fields []")
+
+        user_response = input("page [1]").strip()
+        if user_response:
+            page=user_response
+
+        user_response = input("number of pages [1]").strip()
+        if user_response:
+            num_pages=user_response
+
+        user_response = input("country [gb]").strip()
+        if user_response:
+            country=user_response
+
+        user_response = input("language [en]").strip()
+        if user_response:
+            language=user_response
+
+        user_response = input("date posted [all]").strip()
+        if user_response:
+            date_posted=user_response
+
+        user_response = input("work from home [False]").strip().lower().startswith('t')
+        if user_response:
+            work_from_home=user_response
+
+        user_response=input('employment types ["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"]').strip()
+        if user_response:
+            employment_types=user_response
+
+        user_response = input("job requirements []").strip()
+        if user_response:
+            job_requirements=user_response
+
+        user_response = input("radius [25]").strip()
+        if user_response:
+            radius=user_response
+
+        user_response = input("exclude job publishers []").strip()
+        if user_response:
+            exclude_job_publishers=user_response
+
+        user_response = input("fields []").strip()
+        if user_response:
+            fields=user_response
 
     params = {
         "query": query,
@@ -131,4 +164,4 @@ def generate_search_file(
     with open(search_filepath, "w") as f:
         f.write(json.dumps(event, indent=4))
 
-    return {"event":event, "search_directory": search_directory, "filename": file_name, "filepath": search_filepath}
+    return {"event": event, "search_directory": search_directory, "filename": file_name, "filepath": search_filepath}

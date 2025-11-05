@@ -30,7 +30,7 @@ class TestPerformSearch:
         user_query = "test query in london"
         file_name = "test_search_query"
 
-        test_event = {"api_key": {"x-api-key": "TEST_API"}, "url": "https://api.openwebninja.com/jsearch/search", "params": {"query": "test query in london", "page": 1, "num_pages": 1, "country": "gb", "language": "en", "date_posted": "all", "work_from_home": False, "employment_types": ["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"], "radius": 25}}
+        test_event = {"api_key": {"x-api-key": "TEST_API"}, "url": "https://api.openwebninja.com/jsearch/search", "params": {"query": "test query in london", "page": "1", "num_pages": "1", "country": "gb", "language": "en", "date_posted": "all", "work_from_home": False, "employment_types": "FULLTIME,CONTRACTOR,PARTTIME,INTERN", "radius": "25"}}
         
         filepath = generate_search_file(query=user_query, file_name=file_name, search_directory="./test/test_json/")
         search_directory= filepath["search_directory"]
@@ -97,7 +97,7 @@ class TestGenerateSearchFile:
         test_event={
         "api_key": {},
         "url": "https://api.openwebninja.com/jsearch/search",
-        "params": {"query": "test query in london", "page":1, "num_pages":1, "country":"gb","language":"en","date_posted":"all","work_from_home":False,"employment_types":["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"],"radius":25}
+        "params": {"query": "test query in london", "page":"1", "num_pages":"1", "country":"gb","language":"en","date_posted":"all","work_from_home":False,"employment_types":"FULLTIME,CONTRACTOR,PARTTIME,INTERN","radius":"25"}
     }
         assert generate_search_file(search_directory="./test/test_json/", file_name="test_search_query")["event"] == test_event
 
@@ -118,19 +118,14 @@ class TestGenerateSearchFile:
     "url": "https://api.openwebninja.com/jsearch/search",
     "params": {
         "query": "test query in Jamaica",
-        "page": 1,
-        "num_pages": 1,
+        "page": "1",
+        "num_pages": "1",
         "country": "gb",
         "language": "en",
         "date_posted": "all",
         "work_from_home": false,
-        "employment_types": [
-            "FULLTIME",
-            "CONTRACTOR",
-            "PARTTIME",
-            "INTERN"
-        ],
-        "radius": 25
+        "employment_types": "FULLTIME,CONTRACTOR,PARTTIME,INTERN",
+        "radius": "25"
     }
 }"""
         
@@ -140,3 +135,40 @@ class TestGenerateSearchFile:
             search_file = f.read()
 
         assert search_file == test_file
+
+    @pytest.mark.it('generate search file runs advanced checks with inputs and generates params correctly')
+    def test_generate_advanced (self, monkeypatch):
+        inputs= iter(["test query in Japan", "2", "2", "us", "de", "all", "True","FULLTIME,CONTRACTOR,INTERN", "no_degree", "15", "beeBe,Dice", "employer_name,job_publisher,job_title,job_country" ])
+        monkeypatch.setattr('builtins.input', lambda _:next(inputs))
+        response = generate_search_file(advanced=True, file_name="test_query_in_london")
+        assert response["event"]["params"]=={
+        "query": "test query in Japan",
+        "page": "2",
+        "num_pages": "2",
+        "country": "us",
+        "language": "de",
+        "date_posted": "all",
+        "work_from_home": True,
+        "employment_types": "FULLTIME,CONTRACTOR,INTERN",
+        "job_requirements": "no_degree",
+        "radius": "15",
+        "exclude_job_publishers": "beeBe,Dice",
+        "fields": "employer_name,job_publisher,job_title,job_country"
+        }
+
+    @pytest.mark.it('Generate search file does not enter advanced params when input is empty')
+    def test_generate_advanced_empty_params (self, monkeypatch):
+        inputs= iter(["test query in Japan", "", "", "", "", "", "","", "", "", "", "" ])
+        monkeypatch.setattr('builtins.input', lambda _:next(inputs))
+        response = generate_search_file(advanced=True, file_name="test_query_in_london")
+        assert response["event"]["params"]=={
+        "query": "test query in Japan",
+        "page": "1",
+        "num_pages": "1",
+        "country": "gb",
+        "language": "en",
+        "date_posted": "all",
+        "work_from_home": False,
+        "employment_types": "FULLTIME,CONTRACTOR,PARTTIME,INTERN",
+        "radius": "25",
+        }
