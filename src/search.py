@@ -87,47 +87,47 @@ def generate_search_file(
     
     if advanced == True:
 
-        user_response = input("page [1]").strip()
+        user_response = input("page [1]: ").strip()
         if user_response:
             page=user_response
 
-        user_response = input("number of pages [1]").strip()
+        user_response = input("number of pages [1]: ").strip()
         if user_response:
             num_pages=user_response
 
-        user_response = input("country [gb]").strip()
+        user_response = input("country [gb]: ").strip()
         if user_response:
             country=user_response
 
-        user_response = input("language [en]").strip()
+        user_response = input("language [en]: ").strip()
         if user_response:
             language=user_response
 
-        user_response = input("date posted [all]").strip()
+        user_response = input("date posted [all]: ").strip()
         if user_response:
             date_posted=user_response
 
-        user_response = input("work from home [False]").strip().lower().startswith('t')
+        user_response = input("work from home [False]: ").strip().lower().startswith('t')
         if user_response:
             work_from_home=user_response
 
-        user_response=input('employment types ["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"]').strip()
+        user_response=input('employment types ["FULLTIME", "CONTRACTOR", "PARTTIME", "INTERN"]: ').strip()
         if user_response:
             employment_types=user_response
 
-        user_response = input("job requirements []").strip()
+        user_response = input("job requirements []: ").strip()
         if user_response:
             job_requirements=user_response
 
-        user_response = input("radius [25]").strip()
+        user_response = input("radius [25]: ").strip()
         if user_response:
             radius=user_response
 
-        user_response = input("exclude job publishers []").strip()
+        user_response = input("exclude job publishers []: ").strip()
         if user_response:
             exclude_job_publishers=user_response
 
-        user_response = input("fields []").strip()
+        user_response = input("fields []: ").strip()
         if user_response:
             fields=user_response
 

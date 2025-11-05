@@ -2,7 +2,7 @@
     "api_key": {},
     "url": "https://api.openwebninja.com/jsearch/search",
     "params": {
-        "query": "Python engineer in London",
+        "query": "Junior python engineer in london",
         "page": "1",
         "num_pages": "1",
         "country": "gb",
