@@ -1,4 +1,4 @@
-from src.search import perform_search, generate_search_file
+from src.search import perform_search, generate_search_file, manual_search
 from test_json.json_example import ninja_response
 from unittest.mock import Mock
 import json
@@ -173,3 +173,45 @@ class TestGenerateSearchFile:
         "radius": "25",
         }
         assert response["filename"] == "test_search_query.json"
+
+class TestManualSearch:
+    @pytest.mark.it('manual search passes user input correctly to perform search function')
+    def test_manual_pass_input(self,monkeypatch, mock_response):
+        class MiniMockResponse(Mock):
+            @staticmethod
+            def json():
+                return ninja_response
+
+            @staticmethod
+            def status_code():
+                return 200
+
+        mock = MiniMockResponse()
+
+        monkeypatch.setattr("src.search.perform_search", mock)
+        inputs= iter(["./test/test_json/","test_search_query.json","./test/test_json/", "test-api"])
+        monkeypatch.setattr('builtins.input', lambda _:next(inputs))
+
+        manual_search()
+        mock.assert_called_with(search_directory='./test/test_json/', search_filename='test_search_query.json', destination_directory='./test/test_json/', api_token='test-api')
+
+    @pytest.mark.it('Manual search passes default values to perform serarch function when user does not input response')
+    def test_manual_pass_default(self,monkeypatch, mock_response):
+        class MiniMockResponse(Mock):
+            @staticmethod
+            def json():
+                return ninja_response
+
+            @staticmethod
+            def status_code():
+                return 200
+
+        mock = MiniMockResponse()
+
+
+        monkeypatch.setattr("src.search.perform_search", mock)
+        inputs= iter(["","","", ""])
+        monkeypatch.setattr('builtins.input', lambda _:next(inputs))
+
+        manual_search()
+        mock.assert_called_with()

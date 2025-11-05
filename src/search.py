@@ -44,10 +44,10 @@ def manual_search():
     - api token
     """
 
-    search_directory = str(input("Please enter the directory for your search file [./search_queries/]: ")).strip()
-    search_filename = str(input("Please enter the filename of your search file [default_search.json]: ")).strip()
-    destination_directory = str(input("Please enter an existing save location for your query [./search_results/]: ")).strip()
-    api_token = str(input("Please enter your OpenWeb Ninja API token [.env]: ")).strip()
+    search_directory = input("Please enter the directory for your search file [./search_queries/]: ").strip()
+    search_filename = input("Please enter the filename of your search file [default_search.json]: ").strip()
+    destination_directory = input("Please enter an existing save location for your query [./search_results/]: ").strip()
+    api_token = input("Please enter your OpenWeb Ninja API token [.env]: ").strip()
 
     params = {
         "search_directory": search_directory,
@@ -58,7 +58,7 @@ def manual_search():
 
     not_none_params = {k:v for k, v in params.items() if v}
 
-    return perform_search(**not_none_params)
+    return perform_search(**not_none_params )
 
 def generate_search_file(
     url="https://api.openwebninja.com/jsearch/search",
