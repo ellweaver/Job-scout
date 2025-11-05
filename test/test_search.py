@@ -156,7 +156,7 @@ class TestGenerateSearchFile:
         "fields": "employer_name,job_publisher,job_title,job_country"
         }
 
-    @pytest.mark.it('Generate search file does not enter advanced params when input is empty')
+    @pytest.mark.it('Generate search file uses default params when input is empty')
     def test_generate_advanced_empty_params (self, monkeypatch):
         inputs= iter(["test_search_query", "", "", "", "", "", "","", "", "", "", "", "" ])
         monkeypatch.setattr('builtins.input', lambda _:next(inputs))
