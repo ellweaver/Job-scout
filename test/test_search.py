@@ -345,7 +345,17 @@ class TestListSearchDirectory:
 
         assert list_search_directory(search_directory) == response
 
-    @pytest.mark.skip
     @pytest.mark.it("rejects file if not valid search Json")
-    def test_list_validates_non_search_files(self):
-        pass
+    def test_list_validates_non_search_files(self, monkeypatch):
+        search_directory = './test/test_json/test_list_search'
+        
+        user_input = iter(["1", "2"])
+        monkeypatch.setattr("builtins.input", lambda _: next(user_input))
+
+        response = {
+            'filepath': "./test/test_json/test_list_search/valid.json",
+            'search_directory': search_directory,
+            'filename': "valid.json"
+        }
+
+        assert list_search_directory(search_directory) == response
