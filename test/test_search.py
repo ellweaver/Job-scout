@@ -1,8 +1,9 @@
-from src.search import perform_search, generate_search_file, manual_search
+from src.search import perform_search, generate_search_file, manual_search, list_search_directory
 from test_json.json_example import ninja_response
 from unittest.mock import Mock
 import json
 import pytest
+import os
 from freezegun import freeze_time
 from datetime import datetime
 
@@ -327,9 +328,24 @@ class TestManualSearch:
 
 class TestListSearchDirectory:
     @pytest.mark.it("returns correct filepath with correct user input")
-    def test_list_returns_correct_file_path(self):
-        pass
+    def test_list_returns_correct_file_path(self, monkeypatch):
+        search_directory = './test/test_json/'
+        
+        user_input = "1"
+        monkeypatch.setattr("builtins.input", lambda _: user_input)
+        
+        search_files = ["test_txt.txt", "test_search1.json", "test_search2.json"]
+        monkeypatch.setattr(os, "listdir", lambda _: search_files)
+        
+        response = {
+            'filepath': "./test/test_json/test_search1.json",
+            'search_directory': search_directory,
+            'filename': "test_search1.json"
+        }
 
+        assert list_search_directory(search_directory) == response
+
+    @pytest.mark.skip
     @pytest.mark.it("rejects file if not valid search Json")
     def test_list_validates_non_search_files(self):
         pass
