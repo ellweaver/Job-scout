@@ -1,4 +1,4 @@
-from src.search import perform_search, generate_search_file, manual_search, list_search_directory
+from src.search import perform_search, generate_search_file, manual_search, list_search_directory, validate_search_file
 from test_json.json_example import ninja_response
 from unittest.mock import Mock
 import json
@@ -329,33 +329,61 @@ class TestManualSearch:
 class TestListSearchDirectory:
     @pytest.mark.it("returns correct filepath with correct user input")
     def test_list_returns_correct_file_path(self, monkeypatch):
-        search_directory = './test/test_json/'
+        search_directory = './test/test_json/test_list_search/'
         
-        user_input = "1"
+        user_input = "2"
         monkeypatch.setattr("builtins.input", lambda _: user_input)
-        
-        search_files = ["test_txt.txt", "test_search1.json", "test_search2.json"]
-        monkeypatch.setattr(os, "listdir", lambda _: search_files)
-        
+
         response = {
-            'filepath': "./test/test_json/test_search1.json",
+            'filepath': "./test/test_json/test_list_search/02 valid.json",
             'search_directory': search_directory,
-            'filename': "test_search1.json"
+            'filename': "02 valid.json"
         }
 
         assert list_search_directory(search_directory) == response
 
     @pytest.mark.it("rejects file if not valid search Json")
     def test_list_validates_non_search_files(self, monkeypatch):
-        search_directory = './test/test_json/test_list_search'
+        search_directory = './test/test_json/test_list_search/'
         
         user_input = iter(["1", "2"])
         monkeypatch.setattr("builtins.input", lambda _: next(user_input))
 
         response = {
-            'filepath': "./test/test_json/test_list_search/valid.json",
+            'filepath': "./test/test_json/test_list_search/02 valid.json",
             'search_directory': search_directory,
-            'filename': "valid.json"
+            'filename': "02 valid.json"
         }
 
         assert list_search_directory(search_directory) == response
+
+class TestValidateSearch:
+    @pytest.mark.it("returns True for valid search file")
+    def test_valid_search_file(self):
+        search_directory = "./test/test_json/test_list_search/"
+        file_name = "02 valid.json"
+
+        response = validate_search_file(search_directory, file_name)
+
+        assert response['valid'] == True
+        assert response['missing keys'] == []
+    
+    @pytest.mark.it("returns False for missing query in search file")
+    def test_missing_query_search_file(self):
+        search_directory = "./test/test_json/test_list_search/"
+        file_name = "01 invalid - missing query.json"
+
+        response = validate_search_file(search_directory, file_name)
+
+        assert response['valid'] == False
+        assert response['missing keys'] == ['query']
+
+    @pytest.mark.it("returns False for missing url and params in search file")
+    def test_missing_url_params_search_file(self):
+        search_directory = "./test/test_json/test_list_search/"
+        file_name = "03 invalid - missing url and params.json"
+
+        response = validate_search_file(search_directory, file_name)
+
+        assert response['valid'] == False
+        assert response['missing keys'] == ['url', 'params', 'query']
