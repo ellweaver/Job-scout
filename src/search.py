@@ -195,7 +195,7 @@ def list_search_directory(search_directory="search_queries/"):
     search_files = {}
     json_files = []
 
-    for file in os.listdir(search_directory):
+    for file in sorted(os.listdir(search_directory)):
         if file.endswith(".json"):
             json_files.append(file)
     
@@ -209,7 +209,12 @@ def list_search_directory(search_directory="search_queries/"):
 
     while file_name == None:
         user_input = int(input("Please enter a number that corresponds with a search file: "))
-        file_name = search_files.get(user_input)
+        validation = validate_search_file(search_directory, search_files.get(user_input))
+        
+        if validation['valid']:
+            file_name = search_files.get(user_input)
+        else:
+            print(f'Invalid search file. Missing keys: {validation['missing keys']}')
 
     filepath = search_directory + file_name
 
@@ -218,3 +223,30 @@ def list_search_directory(search_directory="search_queries/"):
         'search_directory': search_directory,
         'filename': file_name
         }
+
+def validate_search_file(search_directory, file_name):
+    filepath = search_directory + file_name
+
+    with open(filepath, 'r') as f:
+        search_file = json.load(f)
+
+    validation = True
+    missing_keys = []
+
+    if 'url' not in search_file.keys():
+        validation = False
+        missing_keys.append('url')
+
+
+    if 'params' not in search_file.keys():
+        validation = False
+        missing_keys.extend(['params', 'query'])
+
+    elif 'query' not in search_file['params'].keys():
+        validation = False
+        missing_keys.append('query')
+
+    return {
+        "valid": validation,
+        "missing keys": missing_keys
+    }
