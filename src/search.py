@@ -211,6 +211,6 @@ def list_search_directory(search_directory="search_queries/"):
 
     return {
         'filepath': filepath,
-        "search_directory": search_directory,
+        'search_directory': search_directory,
         'filename': file_name
         }
