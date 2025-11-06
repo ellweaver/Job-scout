@@ -193,11 +193,15 @@ def list_search_directory(search_directory="search_queries/"):
     """
 
     search_files = {}
+    json_files = []
 
-    for i, file in enumerate(os.listdir(search_directory)):
+    for file in os.listdir(search_directory):
         if file.endswith(".json"):
-            search_files[i] = file
+            json_files.append(file)
     
+    for i, file in enumerate(json_files):
+        search_files[i + 1] = file
+
     for k, v in search_files.items():
         print(f"[{k}] - {v}")
 
