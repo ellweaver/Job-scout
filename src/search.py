@@ -34,7 +34,8 @@ def perform_search(
             f.write(json.dumps(response.json(), indent=4))
 
         return response
-    
+    else:
+        return validation
 
 
 def manual_search():

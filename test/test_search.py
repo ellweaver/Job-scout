@@ -121,7 +121,11 @@ class TestPerformSearch:
             results_file = f.read()
 
         assert json.loads(results_file) == ninja_response
-
+    @pytest.mark.it('perform search does not run if search file is invalid')
+    def test_Perform_validation(self, mock_response):
+        response=perform_search(search_directory="false_directory/", search_filename="false_file.json")
+        assert response["valid"] ==False
+        assert response["missing keys"]== "[Errno 2] No such file or directory: 'false_directory/false_file.json'"
 
 class TestGenerateSearchFile:
     @pytest.mark.it("Generate_search_file returns dictionary")
