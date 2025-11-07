@@ -18,5 +18,4 @@ def extract(event):
     return response
 
 
-if __name__ == "__main__":
-    pprint(extract().json())
+

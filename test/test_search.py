@@ -387,3 +387,8 @@ class TestValidateSearch:
 
         assert response['valid'] == False
         assert response['missing keys'] == ['url', 'params', 'query']
+    @pytest.mark.it('returns File not found error safely if file doess not exist')
+    def test_returns_FileNotFound_error(self):
+        response= validate_search_file("nonexistentdirectory/", "notRealFile.Json")
+        assert response["valid"] ==False
+        assert response["missing keys"]== "[Errno 2] No such file or directory: 'nonexistentdirectory/notRealFile.Json'"

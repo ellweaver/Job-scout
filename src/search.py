@@ -17,22 +17,24 @@ def perform_search(
     Turns Json File into event string and inputs string into extract function.
     """
     search_filepath = search_directory + search_filename
+    validation= validate_search_file(search_directory=search_directory, file_name=search_filename)
+    if validation["valid"]:
+        with open(search_filepath) as f:
+            event = json.load(f)
 
-    with open(search_filepath) as f:
-        event = json.load(f)
+        event["api_key"] = {"x-api-key": api_key}
 
-    event["api_key"] = {"x-api-key": api_key}
+        response = extract(event)
+        destination_timestamp = str(datetime.now())
+        destination_filepath = (
+            destination_directory + destination_timestamp + " " + search_filename
+        )
 
-    response = extract(event)
-    destination_timestamp = str(datetime.now())
-    destination_filepath = (
-        destination_directory + destination_timestamp + " " + search_filename
-    )
+        with open(destination_filepath, "w") as f:
+            f.write(json.dumps(response.json(), indent=4))
 
-    with open(destination_filepath, "w") as f:
-        f.write(json.dumps(response.json(), indent=4))
-
-    return response
+        return response
+    
 
 
 def manual_search():
@@ -64,7 +66,7 @@ def manual_search():
     }
 
     not_none_params = {k: v for k, v in params.items() if v}
-
+    
     return perform_search(**not_none_params)
 
 
@@ -226,9 +228,13 @@ def list_search_directory(search_directory="search_queries/"):
 
 def validate_search_file(search_directory, file_name):
     filepath = search_directory + file_name
-
-    with open(filepath, 'r') as f:
-        search_file = json.load(f)
+    try: 
+        with open(filepath, 'r') as f:
+            search_file = json.load(f)
+    except FileNotFoundError as e:
+        validation=False
+        return{"valid": validation,
+               "missing keys": str(e)}
 
     validation = True
     missing_keys = []
