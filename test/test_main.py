@@ -58,3 +58,14 @@ class TestMain:
         with pytest.raises(SystemExit):
             main()
         mock.assert_called_once()
+
+    @pytest.mark.it('main functions if initial selection is innacurate')
+    def test_snake_case_name(self, monkeypatch):
+        mock = Mock()
+        inputs=iter(["FalseInput", "s", "x"])
+        monkeypatch.setattr("builtins.input", lambda _: next(inputs))
+        monkeypatch.setattr("src.main.generate_search_file", mock)
+        with pytest.raises(SystemExit):
+            main()
+
+        mock.assert_called_once()
