@@ -1,4 +1,4 @@
-from src.search import generate_search_file, perform_search, manual_search
+from src.search import generate_search_file, perform_search, manual_search, list_search_directory
 import sys
 
 
@@ -43,7 +43,7 @@ def main():
             L - Perform search (from file list)\n
             M - Manual file search\n
                     X - Quit\n\n"""
-        user_message = "Please enter selection:"
+        user_message = "Please enter selection: "
         user_input = input(title_line + selection_message + user_message)
         match user_input.upper().strip():
             case "S":
@@ -53,7 +53,8 @@ def main():
             case "D":
                 perform_search()
             case "L":
-                perform_search()
+                file=list_search_directory()
+                perform_search(search_directory=file["search_directory"],search_filename=file["filename"])
             case "M":
                 manual_search()
             case "X":
